@@ -15,6 +15,60 @@ AI-powered project with comprehensive CI/CD pipeline, automated testing, and qua
 - **Security Scanning**: Automated security vulnerability detection
 - **Code Formatting**: Consistent code style with Black and Flake8
 
+## 🧹 Memory Maintenance
+
+JOJIAI includes comprehensive memory maintenance capabilities to ensure optimal performance and compliance with data retention policies.
+
+## Features
+
+- **Automatic TTL Cleanup**: Configurable time-to-live cleanup for old records
+- **User Data Deletion**: GDPR-compliant user data deletion (right to be forgotten)  
+- **Soft Delete Support**: Preserves audit trails while marking records as deleted
+- **Batch Processing**: Efficient handling of large datasets
+- **Automated Scheduling**: Weekly maintenance via GitHub Actions
+
+## Quick Start
+
+```python
+from src.maintenance.memory_maintenance import CompatDbClient
+
+# Initialize client
+client = CompatDbClient()
+
+# Clean old records (30+ days)
+client.cleanup_old_records("user_sessions", days_old=30)
+
+# Delete user data (GDPR compliance)
+client.forget_user("user123")
+
+# Health check
+health = client.health_check()
+```
+
+## CI/CD Integration
+
+Memory maintenance runs automatically every Sunday at 2 AM UTC. Manual triggers are available through GitHub Actions for immediate cleanup operations.
+
+**Supported Operations:**
+- `ttl_cleanup` - Remove old records based on age
+- `forget_user` - Delete all data for a specific user
+- `health_check` - Verify database connectivity
+- `full_maintenance` - Comprehensive cleanup across all tables
+
+## Configuration
+
+Set the `DATABASE_URL` environment variable:
+
+```bash
+export DATABASE_URL="postgresql://user:password@host:port/database"
+```
+
+## Documentation
+
+For detailed documentation, see [`docs/memory_maintenance.md`](docs/memory_maintenance.md).
+
+---
+
 ## 📋 Requirements
 
 - Python 3.10 or higher
